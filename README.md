@@ -39,64 +39,20 @@ Point cloud computation has become an increasingly more important workload for a
 
 ## Installation
 
-We provide pre-built torchsparse v2.1.0 packages (recommended) with different PyTorch and CUDA versions to simplify the building for Linux and Windows systems.
+### Installation for CUDA12+ (New!)
 
-### 🪟 Windows Installation (New!)
-
-For Windows users, we now provide native Windows support with pre-built wheels:
-
-```bash
-# Quick installation with pre-built wheels
-pip install https://github.com/Deathdadev/torchsparse/releases/download/v2.1.0-windows/torchsparse-2.1.0-cp310-cp310-win_amd64.whl
-
-# Or build from source
-pip install git+https://github.com/Deathdadev/torchsparse.git
-```
-
-**📋 Windows Requirements:**
-- Windows 10/11 (x64)
-- Python 3.8-3.11
-- PyTorch 1.9.0+ with CUDA
-- Visual Studio 2019/2022
-- CUDA 11.x or 12.x
-
-**📚 Detailed Cross-Platform Setup:** See [CROSS_PLATFORM_SETUP_GUIDE.md](CROSS_PLATFORM_SETUP_GUIDE.md)
-
-### 🐧 Linux Installation
-
-1. Ensure at least PyTorch 1.9.0 is installed:
-
-   ```bash
-   python -c "import torch; print(torch.__version__)"
-   >>> 1.10.0
-   ```
-
-1. If you want to use TorchSparse with gpus, please ensure PyTorch was installed with CUDA:
-
-   ```bash
-   python -c "import torch; print(torch.version.cuda)"
-   >>> 11.3
-   ```
-
-1. Then the right TorchSparse wheel can be found and installed by running the installation script:
-
-   ```bash
-   python -c "$(curl -fsSL https://raw.githubusercontent.com/mit-han-lab/torchsparse/master/install.py)"
-   ```
-   
-
-If Pypi server does not work as expected, no worries, you can still manually download the wheels. The wheels are listed in [this website](http://pypi.hanlab.ai/simple/torchsparse). One can utilize our installation script to automatically determine the version number used to index the wheels. For example, if you use PyTorch 1.11.0, CUDA 11.5, the version number will end up to be 2.1.0+torch111cu115. You can then select the proper wheel according to your Python version.
-
-
-You may also alternatively install our library from source via:
+Tested with CU121, CU126 on A100, H100.
+Minor modification for the recent CUDA syntax.
 
 ```bash
-python setup.py install
+#optional for google dense hash map lib
+apt-get install libsparsehash-dev
+pip install .
 ```
 in the repository, or using  
 
 ```
-pip install git+https://github.com/mit-han-lab/torchsparse.git
+pip install git+https://github.com/hwanhuh/torchsparse.git
 ```
 without the need to clone the repository. 
 
