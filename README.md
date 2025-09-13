@@ -1,12 +1,5 @@
 # TorchSparse
 
-<p align="center">
-<img 
-   src="./docs/figs/torchsparse.png"
-   height="300" 
->
-
-
 TorchSparse is a high-performance neural network library for point cloud processing.
 
 ### [website](http://torchsparse.mit.edu/) | [paper (MICRO 2023)](https://www.dropbox.com/scl/fi/obdku0kqxjlkvuom2opk4/paper.pdf?rlkey=0zmy8eq9fzllgkx54zsvwsecf&dl=0) | [paper (MLSys 2022)](https://arxiv.org/abs/2204.10319) | [presentation](https://www.youtube.com/watch?v=IIh4EwmcLUs) | [documents](http://torchsparse-docs.github.io/) | [pypi server](http://pypi.hanlab.ai/simple/torchsparse)
@@ -16,27 +9,6 @@ TorchSparse is a high-performance neural network library for point cloud process
 
 Point cloud computation has become an increasingly more important workload for autonomous driving and other applications. Unlike dense 2D computation, point cloud convolution has **sparse** and **irregular** computation patterns and thus requires dedicated inference system support with specialized high-performance kernels. While existing point cloud deep learning libraries have developed different dataflows for convolution on point clouds, they assume a single dataflow throughout the execution of the entire model. In this work, we systematically analyze and improve existing dataflows. Our resulting system, TorchSparse, achieves **2.9x**, **3.3x**, **2.2x** and **1.7x** measured end-to-end speedup on an NVIDIA A100 GPU over the state-of-the-art MinkowskiEngine, SpConv 1.2, TorchSparse (MLSys) and SpConv v2 in inference respectively. 
 
-## News
-**\[2024/11\]** TorchSparse++ is now supporting [MMDetection3D](https://github.com/open-mmlab/mmdetection3d) and [OpenPCDet](https://github.com/open-mmlab/OpenPCDet) via plugins! [A full demo](./examples/) is available.
-
-**\[2023/11\]** TorchSparse++ has been adopted by [One-2-3-45++](https://arxiv.org/abs/2311.07885) from Prof. Hao Su's lab (UCSD) for 3D object generation!
-
-**\[2023/10\]** We present TorchSparse++ at 56th IEEE/ACM International Symposium on Microarchitecture (MICRO 2023). We also fully release the source code of TorchSparse++.
-
-**\[2023/6\]** TorchSparse++ has been adopted by [One-2-3-45](https://arxiv.org/abs/2306.16928) from Prof. Hao Su's lab (UCSD) for 3D mesh reconstruction!
-
-**\[2023/6\]** TorchSparse++ has been released and presented at CVPR 2023 workshops on autonomous driving. It achieves 1.7-2.9x inference speedup over previous state-of-the-art systems.
-
-**\[2023/1\]** [Argoverse 2](https://arxiv.org/abs/2301.00493) dataset implements their baseline detector with TorchSparse.
-
-**\[2022/8\]** TorchSparse is presented at MLSys 2022. Talk video is available [here](https://www.youtube.com/watch?v=IIh4EwmcLUs).
-
-**\[2022/6\]** TorchSparse has been adopted by [SparseNeuS](https://arxiv.org/pdf/2206.05737) for neural surface reconstruction.
-
-**\[2022/1\]** TorchSparse has been accepted to MLSys 2022, featuring adaptive matrix multiplication grouping and locality-aware memory access.
-
-**\[2021/6\]** TorchSparse v1.4 has been released.
-
 ## Installation
 
 ### Installation for CUDA12+ (New!)
@@ -44,16 +16,53 @@ Point cloud computation has become an increasingly more important workload for a
 Tested with CU121, CU126 on A100, H100.
 Minor modification for the recent CUDA syntax.
 
+#### Prerequisites 
 ```bash
-#optional for google dense hash map lib
-apt-get install libsparsehash-dev
+# Update package lists
+sudo apt-get update
+
+# (optional) core C/C++ build tools and C library headers
+sudo apt-get install --reinstall build-essential libc6-dev
+
+# (optional) Install Google's sparsehash library required by the source code
+sudo apt-get install libsparsehash-dev
+
+# (Set Environment Variables) specify the include paths:
+export CPLUS_INCLUDE_PATH=/usr/include:/usr/include/x86_64-linux-gnu
+```
+
+#### Prebuilt wheel (only cu121, cp310 & cp311)
+```bash
+# py3.11/torch2.5.1+cu121 
+pip install https://github.com/hwanhuh/torchsparse/releases/download/v2.1.0-linux-cu121/torchsparse-2.1.0-cp311-cp311-linux_x86_64.whl
+
+# py3.10/torch2.5.1.+cu121
+pip install https://github.com/hwanhuh/torchsparse/releases/download/v2.1.0-linux-cu121/torchsparse-2.1.0-cp310-cp310-linux_x86_64.whl
+```
+
+#### from source 
+
+- Option A: Clone and Install
+
+```bash
+git clone https://github.com/hwanhuh/torchsparse.git
+cd torchsparse
 pip install .
 ```
-in the repository, or using  
+
+- Option B: Install Directly from GitHub
 
 ```
 pip install git+https://github.com/hwanhuh/torchsparse.git
 ```
+
+- highly recommended for the compilation speed up
+
+```bash
+export TORCH_CUDA_ARCH_LIST="Your/Arch/Version" #e.g. 8.0 
+export MAX_JOBS=64 #Adjust to the number of CPU cores available
+```
+
 without the need to clone the repository. 
 
 ## Benchmarks
