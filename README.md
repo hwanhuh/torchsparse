@@ -21,14 +21,9 @@ Minor modification for the recent CUDA syntax.
 # Update package lists
 sudo apt-get update
 
-# (optional) core C/C++ build tools and C library headers
-sudo apt-get install --reinstall build-essential libc6-dev
+# (optional) core C/C++ build tools and C library headers /  Google's sparsehash
+sudo apt-get install --reinstall build-essential libc6-dev libsparsehash-dev
 
-# (optional) Install Google's sparsehash library required by the source code
-sudo apt-get install libsparsehash-dev
-
-# (Set Environment Variables) specify the include paths:
-export CPLUS_INCLUDE_PATH=/usr/include:/usr/include/x86_64-linux-gnu
 ```
 
 #### Prebuilt wheel (only cu121, cp310 & cp311)
